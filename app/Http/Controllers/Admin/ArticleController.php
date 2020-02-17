@@ -3,16 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
+use App\Exceptions\ApiException;
 use App\Models\Article;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
-    /**
-     * 列表
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $where = [];
@@ -21,16 +18,10 @@ class ArticleController extends Controller
         $perPage    = $request->input('per_page');
 
         $paginator = Article::where($where)->orderBy($orderField,$orderType)->paginate($perPage);
-        return $this->success($this->pageData($paginator));
+        return $this->pageData($paginator);
     }
 
 
-    /**
-     * 创建
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
 
@@ -38,36 +29,22 @@ class ArticleController extends Controller
         return $this->success(['id'=>$data['id']]);
     }
 
-    /**
-     * 详情
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Request $request)
     {
+        //throw new ApiException(CodeEnum::ERROR_NOT_FOUND);
         $data = Article::findOrFail($request->id);
         return $this->success($data);
     }
 
-    /**
-     * 更新
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request)
     {
         $res = Article::where('id',$request->id)->update($request->all());
         return $this->success($res);
     }
 
-    /**
-     * 删除
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function destroy(Request $request)
     {
         $res = Article::find($request->id)->delete();

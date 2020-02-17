@@ -10,12 +10,13 @@ Trait ApiResponse
     public function pageData($paginator)
     {
         $page = $paginator->toArray();
-        return [
+        $data = [
             'total'         => $page['total'],
             'current_page'  => $page['current_page'],
             'per_page'      => $page['per_page'],
             'list'          => $page['data']
         ];
+        return response()->json($data);
     }
 
     public function success($data,$codeEnum=CodeEnum::SUCCESS)
