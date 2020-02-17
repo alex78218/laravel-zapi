@@ -13,6 +13,9 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $where = [];
+        if($request->keyword){
+            $where[] = ['title','like','%{$request->keyword}%'];
+        }
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
         $perPage    = $request->input('per_page');
@@ -29,11 +32,10 @@ class ArticleController extends Controller
         return $this->success(['id'=>$data['id']]);
     }
 
-
     public function show(Request $request)
     {
         //throw new ApiException(CodeEnum::ERROR_NOT_FOUND);
-        $data = Article::findOrFail($request->id);
+        $data = Article::with('category')->findOrFail($request->id);
         return $this->success($data);
     }
 

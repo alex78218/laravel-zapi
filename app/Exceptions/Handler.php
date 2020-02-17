@@ -55,11 +55,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        $path = explode('/',$request->path());
-        if($exception instanceof ApiException or $path[0]=='api'){
+        if($exception instanceof ApiException){
             $err = [$exception->getCode(),$exception->getMessage()];
             if(!$err[0]){
-                $err = CodeEnum::ERROR_UNKNOW;
+                $err = CodeEnum::ERROR_SERVER;
             }
             return $this->error(null,$err);
         }
