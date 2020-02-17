@@ -8,5 +8,6 @@ class Tag extends Model
 {
     use SoftDeletes;
 
+
     protected $fillable = ['tagname','sort'];
 }
