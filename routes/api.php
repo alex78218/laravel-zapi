@@ -25,5 +25,13 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::get('update','ArticleController@update');
         Route::get('destroy','ArticleController@destroy');
     });
+
+    Route::prefix('tag')->group(function(){
+        Route::get('index','TagController@index');
+        Route::get('show','TagController@show');
+        Route::get('store','TagController@store');
+        Route::get('update','TagController@update');
+        Route::get('destroy','TagController@destroy');
+    });
 });
 

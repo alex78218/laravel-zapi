@@ -15,4 +15,9 @@ class Article extends Model
     {
         return $this->belongsTo('App\Models\Category')->select('id','catename');
     }
+
+    public function tag()
+    {
+        return $this->belongsToMany('App\Models\Tag','article_tags');
+    }
 }
