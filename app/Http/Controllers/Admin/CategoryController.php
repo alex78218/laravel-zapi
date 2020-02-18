@@ -5,53 +5,51 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
 use App\Models\Article;
-use App\Models\Tag;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class CategoryController extends Controller
 {
 
     public function index(Request $request)
     {
-        $where = [];
-        if($request->keyword){
-            $where[] = ['tagname','like','%{$request->keyword}%'];
-        }
-        $orderField = $request->input('order_field','id');
-        $orderType  = $request->input('order_type','desc');
+        $list = Category::where([])
+            ->orderBy('parent_id','asc')
+            ->orderBy('sort','asc')
+            ->orderBy('id','asc')
+            ->get();
 
-        $list = Tag::where($where)->orderBy($orderField,$orderType)->get()->toArray();
-
+        $list = listToTree($list->toArray());
         return $this->success(compact('list'));
     }
 
     public function store(Request $request)
     {
-        $data = Tag::create($request->all());
+        $data = Category::create($request->all());
         return $this->success(['id'=>$data['id']]);
     }
 
     public function show($id)
     {
-        $data = Tag::findOrFail($id);
+        $data = Category::findOrFail($id);
         return $this->success($data);
     }
 
     public function update(Request $request,$id)
     {
-        $res = Tag::withTrashed()->find($id)->update($request->all());
+        $res = Category::withTrashed()->find($id)->update($request->all());
         return $this->success($res);
     }
 
     public function destroy($id)
     {
-        $res = Tag::find($id)->delete();
+        $res = Category::find($id)->delete();
         return $this->success($res);
     }
 
     public function forceDelete($id)
     {
-        $res = Tag::withTrashed()->find($id)->forceDelete();
+        $res = Category::withTrashed()->find($id)->forceDelete();
         return $this->success($res);
     }
 }

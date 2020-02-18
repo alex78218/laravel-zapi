@@ -26,7 +26,7 @@ class ArticleController extends Controller
                 ->with(['category','tags'])
                 ->orderBy($orderField,$orderType)
                 ->paginate($perPage);
-        pd($paginator);
+
         return $this->pageData($paginator);
     }
 

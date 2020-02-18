@@ -35,5 +35,14 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::any('destroy/{id}','TagController@destroy');
         Route::any('forceDelete/{id}','TagController@forceDelete');
     });
+
+    Route::prefix('category')->group(function(){
+        Route::any('index','CategoryController@index');
+        Route::any('store','CategoryController@store');
+        Route::any('show/{id}','CategoryController@show');
+        Route::any('update/{id}','CategoryController@update');
+        Route::any('destroy/{id}','CategoryController@destroy');
+        Route::any('forceDelete/{id}','CategoryController@forceDelete');
+    });
 });
 

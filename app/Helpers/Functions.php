@@ -42,3 +42,24 @@ if (!function_exists('pd')) {
         die;
     }
 }
+
+if(!function_exists('listToTree')){
+    function listToTree(array $data)
+    {
+        $list = [];
+        foreach($data as $row){
+            $list[$row['id']] = $row;
+        }
+
+        $tree = [];
+        foreach($list as $id=>$row){
+            $pid = $row['parent_id'];
+            if(!isset($list[$pid])){
+                $tree[] = &$list[$id];
+            }else{
+                $list[$pid]['children'][] = &$list[$id];
+            }
+        }
+        return $tree;
+    }
+}
