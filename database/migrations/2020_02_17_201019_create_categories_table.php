@@ -18,8 +18,8 @@ class CreateCategoriesTable extends Migration
             $table->string('catename')->index();
             $table->integer('parent_id')->default(0);
             $table->integer('sort')->default(0);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

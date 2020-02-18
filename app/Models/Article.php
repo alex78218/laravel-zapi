@@ -13,11 +13,11 @@ class Article extends Model
 
     public function category()
     {
-        return $this->belongsTo('App\Models\Category')->select('id','catename');
+        return $this->belongsTo(Category::class)->select('id','catename');
     }
 
-    public function tag()
+    public function tags()
     {
-        return $this->belongsToMany('App\Models\Tag','article_tags');
+        return $this->belongsToMany(Tag::class,'article_tags');
     }
 }

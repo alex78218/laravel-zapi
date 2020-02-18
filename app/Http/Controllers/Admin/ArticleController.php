@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
 use App\Models\Article;
+use App\Models\ArticleTag;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -19,9 +20,8 @@ class ArticleController extends Controller
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
         $perPage    = $request->input('per_page');
-
         $paginator = Article::where($where)
-                ->with('category','tag')
+                ->with(['category','tags'])
                 ->orderBy($orderField,$orderType)
                 ->paginate($perPage);
 
@@ -29,11 +29,14 @@ class ArticleController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(Request $request,ArticleTag $articleTagModel)
     {
 
-        $data = Article::create($request->all());
-        return $this->success(['id'=>$data['id']]);
+        $article = Article::create($request->all());
+        if($article && $request->tag_ids){
+            $articleTagModel->addTagIds($article->id,$request->tag_ids);
+        }
+        return $this->success(['id'=>$article->id]);
     }
 
     public function show(Request $request)
@@ -44,9 +47,15 @@ class ArticleController extends Controller
     }
 
 
-    public function update(Request $request)
+    public function update(Request $request,ArticleTag $articleTagModel)
     {
-        $res = Article::where('id',$request->id)->update($request->all());
+        $res = Article::where('id',$request->id)->update($request->except('tag_ids'));
+        if($res){
+            $articleTagModel::where('article_id',$request->id)->forceDelete();
+            if($request->tag_ids){
+                $articleTagModel->addTagIds($request->id,$request->tag_ids);
+            }
+        }
         return $this->success($res);
     }
 

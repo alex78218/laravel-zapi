@@ -17,8 +17,8 @@ class CreateTagsTable extends Migration
             $table->bigIncrements('id');
             $table->string('tagname')->index();
             $table->integer('sort')->default(0);
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

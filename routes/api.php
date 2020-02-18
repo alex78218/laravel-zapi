@@ -19,19 +19,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::prefix('')->namespace('Admin')->group(function(){
     Route::prefix('article')->group(function(){
-        Route::get('index','ArticleController@index');
-        Route::get('show','ArticleController@show');
-        Route::get('store','ArticleController@store');
-        Route::get('update','ArticleController@update');
-        Route::get('destroy','ArticleController@destroy');
+        Route::any('index','ArticleController@index');
+        Route::any('show','ArticleController@show');
+        Route::any('store','ArticleController@store');
+        Route::any('update','ArticleController@update');
+        Route::any('destroy','ArticleController@destroy');
     });
 
     Route::prefix('tag')->group(function(){
-        Route::get('index','TagController@index');
-        Route::get('show','TagController@show');
-        Route::get('store','TagController@store');
-        Route::get('update','TagController@update');
-        Route::get('destroy','TagController@destroy');
+        Route::any('index','TagController@index');
+        Route::any('show','TagController@show');
+        Route::any('store','TagController@store');
+        Route::any('update','TagController@update');
+        Route::any('destroy','TagController@destroy');
     });
 });
 
