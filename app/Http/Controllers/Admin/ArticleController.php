@@ -59,10 +59,15 @@ class ArticleController extends Controller
         return $this->success($res);
     }
 
-
     public function destroy(Request $request)
     {
         $res = Article::find($request->id)->delete();
+        return $this->success($res);
+    }
+
+    public function forceDelete(Request $request)
+    {
+        $res = Article::withTrashed()->find($request->id)->forceDelete();
         return $this->success($res);
     }
 }

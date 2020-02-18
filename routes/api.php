@@ -24,6 +24,7 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::any('store','ArticleController@store');
         Route::any('update','ArticleController@update');
         Route::any('destroy','ArticleController@destroy');
+        Route::any('forceDelete','ArticleController@forceDelete');
     });
 
     Route::prefix('tag')->group(function(){
@@ -32,6 +33,7 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::any('store','TagController@store');
         Route::any('update','TagController@update');
         Route::any('destroy','TagController@destroy');
+        Route::any('forceDelete','TagController@forceDelete');
     });
 });
 

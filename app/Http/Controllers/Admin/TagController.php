@@ -51,4 +51,10 @@ class TagController extends Controller
         $res = Tag::find($request->id)->delete();
         return $this->success($res);
     }
+
+    public function forceDelete(Request $request)
+    {
+        $res = Tag::withTrashed()->find($request->id)->forceDelete();
+        return $this->success($res);
+    }
 }
