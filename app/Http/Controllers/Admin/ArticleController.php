@@ -20,11 +20,13 @@ class ArticleController extends Controller
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
         $perPage    = $request->input('per_page');
-        $paginator = Article::where($where)
+
+        $paginator = Article::withTrashed()
+                ->where($where)
                 ->with(['category','tags'])
                 ->orderBy($orderField,$orderType)
                 ->paginate($perPage);
-
+        pd($paginator);
         return $this->pageData($paginator);
     }
 
