@@ -24,10 +24,8 @@ class TagController extends Controller
         return $this->success(compact('list'));
     }
 
-
     public function store(Request $request)
     {
-
         $data = Tag::create($request->all());
         return $this->success(['id'=>$data['id']]);
     }
@@ -38,13 +36,11 @@ class TagController extends Controller
         return $this->success($data);
     }
 
-
     public function update($id)
     {
-        $res = Tag::where('id',$id)->update($request->all());
+        $res = Tag::withTrashed()->find($id)->update($request->all());
         return $this->success($res);
     }
-
 
     public function destroy($id)
     {

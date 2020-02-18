@@ -30,10 +30,8 @@ class ArticleController extends Controller
         return $this->pageData($paginator);
     }
 
-
     public function store(Request $request,ArticleTag $articleTagModel)
     {
-
         $article = Article::create($request->all());
         if($article && $request->tag_ids){
             $articleTagModel->addTagIds($article->id,$request->tag_ids);
@@ -43,17 +41,15 @@ class ArticleController extends Controller
 
     public function show($id)
     {
-        //throw new ApiException(CodeEnum::ERROR_NOT_FOUND);
         $data = Article::with('category')->findOrFail($id);
         return $this->success($data);
     }
 
-
     public function update(Request $request,ArticleTag $articleTagModel,$id)
     {
-        $res = Article::where('id',$id)->update($request->except('tag_ids'));
+        $res = Article::withTrashed()->find($id)->update($request->except('tag_ids'));
         if($res){
-            $articleTagModel::where('article_id',$id)->forceDelete();
+            ArticleTag::where('article_id',$id)->forceDelete();
             if($request->tag_ids){
                 $articleTagModel->addTagIds($id,$request->tag_ids);
             }

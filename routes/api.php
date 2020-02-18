@@ -21,8 +21,8 @@ Route::prefix('')->namespace('Admin')->group(function(){
     Route::prefix('article')->group(function(){
         Route::any('index','ArticleController@index');
         Route::any('store','ArticleController@store');
+        Route::any('show/{id}','ArticleController@show');
         Route::any('update/{id}','ArticleController@update');
-        Route::get('show/{id}','ArticleController@show');
         Route::any('destroy/{id}','ArticleController@destroy');
         Route::any('forceDelete/{id}','ArticleController@forceDelete');
     });
@@ -30,8 +30,8 @@ Route::prefix('')->namespace('Admin')->group(function(){
     Route::prefix('tag')->group(function(){
         Route::any('index','TagController@index');
         Route::any('store','TagController@store');
-        Route::any('update/{id}','TagController@update');
         Route::any('show/{id}','TagController@show');
+        Route::any('update/{id}','TagController@update');
         Route::any('destroy/{id}','TagController@destroy');
         Route::any('forceDelete/{id}','TagController@forceDelete');
     });
