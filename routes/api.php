@@ -20,20 +20,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::prefix('')->namespace('Admin')->group(function(){
     Route::prefix('article')->group(function(){
         Route::any('index','ArticleController@index');
-        Route::any('show','ArticleController@show');
         Route::any('store','ArticleController@store');
-        Route::any('update','ArticleController@update');
-        Route::any('destroy','ArticleController@destroy');
-        Route::any('forceDelete','ArticleController@forceDelete');
+        Route::any('update/{id}','ArticleController@update');
+        Route::get('show/{id}','ArticleController@show');
+        Route::any('destroy/{id}','ArticleController@destroy');
+        Route::any('forceDelete/{id}','ArticleController@forceDelete');
     });
 
     Route::prefix('tag')->group(function(){
         Route::any('index','TagController@index');
-        Route::any('show','TagController@show');
         Route::any('store','TagController@store');
-        Route::any('update','TagController@update');
-        Route::any('destroy','TagController@destroy');
-        Route::any('forceDelete','TagController@forceDelete');
+        Route::any('update/{id}','TagController@update');
+        Route::any('show/{id}','TagController@show');
+        Route::any('destroy/{id}','TagController@destroy');
+        Route::any('forceDelete/{id}','TagController@forceDelete');
     });
 });
 

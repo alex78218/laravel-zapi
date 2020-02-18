@@ -41,35 +41,35 @@ class ArticleController extends Controller
         return $this->success(['id'=>$article->id]);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
         //throw new ApiException(CodeEnum::ERROR_NOT_FOUND);
-        $data = Article::with('category')->findOrFail($request->id);
+        $data = Article::with('category')->findOrFail($id);
         return $this->success($data);
     }
 
 
-    public function update(Request $request,ArticleTag $articleTagModel)
+    public function update(Request $request,ArticleTag $articleTagModel,$id)
     {
-        $res = Article::where('id',$request->id)->update($request->except('tag_ids'));
+        $res = Article::where('id',$id)->update($request->except('tag_ids'));
         if($res){
-            $articleTagModel::where('article_id',$request->id)->forceDelete();
+            $articleTagModel::where('article_id',$id)->forceDelete();
             if($request->tag_ids){
-                $articleTagModel->addTagIds($request->id,$request->tag_ids);
+                $articleTagModel->addTagIds($id,$request->tag_ids);
             }
         }
         return $this->success($res);
     }
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $res = Article::find($request->id)->delete();
+        $res = Article::find($id)->delete();
         return $this->success($res);
     }
 
-    public function forceDelete(Request $request)
+    public function forceDelete($id)
     {
-        $res = Article::withTrashed()->find($request->id)->forceDelete();
+        $res = Article::withTrashed()->find($id)->forceDelete();
         return $this->success($res);
     }
 }

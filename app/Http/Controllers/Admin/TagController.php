@@ -32,29 +32,29 @@ class TagController extends Controller
         return $this->success(['id'=>$data['id']]);
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        $data = Tag::findOrFail($request->id);
+        $data = Tag::findOrFail($id);
         return $this->success($data);
     }
 
 
-    public function update(Request $request)
+    public function update($id)
     {
-        $res = Tag::where('id',$request->id)->update($request->all());
+        $res = Tag::where('id',$id)->update($request->all());
         return $this->success($res);
     }
 
 
-    public function destroy(Request $request)
+    public function destroy($id)
     {
-        $res = Tag::find($request->id)->delete();
+        $res = Tag::find($id)->delete();
         return $this->success($res);
     }
 
-    public function forceDelete(Request $request)
+    public function forceDelete($id)
     {
-        $res = Tag::withTrashed()->find($request->id)->forceDelete();
+        $res = Tag::withTrashed()->find($id)->forceDelete();
         return $this->success($res);
     }
 }
