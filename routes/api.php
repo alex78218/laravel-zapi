@@ -13,8 +13,13 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth.api')->namespace('Admin')->group(function(){
+    Route::prefix('auth')->group(function(){
+        Route::any('login', 'AuthController@login');
+        Route::any('logout', 'AuthController@logout');
+        Route::any('refresh', 'AuthController@refresh');
+        Route::any('me', 'AuthController@me');
+    });
 });
 
 Route::prefix('')->namespace('Admin')->group(function(){
@@ -44,5 +49,13 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::any('destroy/{id}','CategoryController@destroy');
         Route::any('forceDelete/{id}','CategoryController@forceDelete');
     });
-});
 
+    Route::prefix('user')->group(function(){
+        Route::any('index','UserController@index');
+        Route::any('store','UserController@store');
+        Route::any('show/{id}','UserController@show');
+        Route::any('update/{id}','UserController@update');
+        Route::any('destroy/{id}','UserController@destroy');
+        Route::any('forceDelete/{id}','UserController@forceDelete');
+    });
+});

@@ -62,6 +62,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'rescheck' => \App\Http\Middleware\ResponseFormat::class,
+
+        //'auth.jwt' => \Tymon\JWTAuth\Http\Middleware\Authenticate::class,
+        'auth.api' => \App\Http\Middleware\ApiTokenCheck::class,
     ];
 
     /**

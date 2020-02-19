@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
-use App\Models\Article;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
