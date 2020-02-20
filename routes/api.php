@@ -18,7 +18,7 @@ Route::middleware('auth.api')->namespace('Admin')->group(function(){
         Route::any('login', 'AuthController@login');
         Route::any('logout', 'AuthController@logout');
         Route::any('refresh', 'AuthController@refresh');
-        Route::any('me', 'AuthController@me');
+        Route::any('me', 'AuthController@me')->name('auth.me');
     });
 });
 

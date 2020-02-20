@@ -25,7 +25,7 @@ class RoleController extends Controller
         //$role = Role::find(1);
         //$role->givePermissionTo('edit article');
 
-        dd($user);
+        dd($user->getAllPermissions()->toArray());
     }
 
     public function index(Request $request)
