@@ -58,4 +58,14 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::any('destroy/{id}','UserController@destroy');
         Route::any('forceDelete/{id}','UserController@forceDelete');
     });
+
+    Route::prefix('role')->group(function(){
+        Route::any('test','RoleController@test');
+        Route::any('index','RoleController@index');
+        Route::any('store','RoleController@store');
+        Route::any('show/{id}','RoleController@show');
+        Route::any('update/{id}','RoleController@update');
+        Route::any('destroy/{id}','RoleController@destroy');
+        Route::any('forceDelete/{id}','RoleController@forceDelete');
+    });
 });

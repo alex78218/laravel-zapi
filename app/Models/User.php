@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
 {
+    use HasRoles;
     use Notifiable;
 
     /**
@@ -58,4 +60,6 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+
 }
