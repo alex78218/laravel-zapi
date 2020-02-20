@@ -19,10 +19,13 @@ class UserController extends Controller
         }
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
+        $perPage    = $request->input('per_page');
 
-        $list = User::where($where)->orderBy($orderField,$orderType)->get()->toArray();
+        $paginator = User::where($where)
+            ->orderBy($orderField,$orderType)
+            ->paginate($perPage);
 
-        return $this->success(compact('list'));
+        return $this->pageData($paginator);
     }
 
     public function store(Request $request)

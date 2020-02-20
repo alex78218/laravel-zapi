@@ -4,17 +4,43 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Role as PermissionRole;
 
 class RoleController extends Controller
 {
+    public function __construct()
+    {
+        app()->cache->forget('spatie.permission.cache');
+    }
+
     public function test(User $userModel)
     {
-        //$role = Role::create(['name'=>'admin']);
+        $routes = app()->routes->getRoutes();
+        //var_dump($routes->toArray());
+        $list = [];
+        foreach($routes as $k=>$v){
+            $arr = explode('/',$v->uri);
+            if($arr[0]=='api'){
+                $list[$k]['url'] = $v->uri;
+                $list[$k]['path'] = $v->methods[0];
+                $list[$k]['name'] = $v->getName();
+            }
+        }
+        dd($list);
+        $list = [];
+        foreach($routes as $k=>$v){
+            $list[$k]['url'] = $v->uri;
+            $list[$k]['path'] = $v->methods[0];
+            $list[$k]['name'] = $v->getName();
+        }
+        var_dump($list);
+        die();
+        $role = Role::create(['name'=>'editor','guard_name'=>'api']);
         //$permission = Permission::create(['name'=>'edit article']);
         $user = $userModel::find(10);
   //      auth()->login($user);
@@ -22,7 +48,7 @@ class RoleController extends Controller
         $user->givePermissionTo('edit article');
         $user->assignRole('admin');
 
-        //$role = Role::find(1);
+        //$role = Role::find(1); Role::
         //$role->givePermissionTo('edit article');
 
         dd($user->getAllPermissions()->toArray());
@@ -37,47 +63,48 @@ class RoleController extends Controller
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
 
-        $list = User::where($where)->orderBy($orderField,$orderType)->get()->toArray();
+        $paginator = User::where($where)
+            ->orderBy($orderField,$orderType)
+            ->paginate($perPage);
 
-        return $this->success(compact('list'));
+        return $this->pageData($paginator);
     }
 
-    public function store(Request $request)
+    public function store(Request $request,ArticleTag $articleTagModel)
     {
-        $password = $request->password;
-        $name = $request->name;
-        $email = $request->email;
-
-        $password = Hash::make($password);
-        $user = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => $password
-        ]);
-        return $this->success($user);
+        $role = PermissionRole::create($request->all());
+        $role->givePermissionTo($request->permissions);
+        return $this->success(['id'=>$role->id]);
     }
 
     public function show($id)
     {
-        $data = User::findOrFail($id);
+        $data = Role::findOrFail($id);
         return $this->success($data);
     }
 
     public function update(Request $request,$id)
     {
-        $res = User::withTrashed()->find($id)->update($request->all());
+        $role = PermissionRole::findById($request->id);
+        $has = $role->getAllPermissions()->toArray();
+        foreach($has as $h){
+            if(!in_array($h['name'],$request->permissions)){
+                $role->revokePermissionTo($h['name']);
+            }
+        }
+        $res = $role->givePermissionTo($request->permissions);
         return $this->success($res);
     }
 
     public function destroy($id)
     {
-        $res = User::find($id)->delete();
+        $res = Role::find($id)->delete();
         return $this->success($res);
     }
 
     public function forceDelete($id)
     {
-        $res = User::withTrashed()->find($id)->forceDelete();
+        $res = Role::find($id)->forceDelete();
         return $this->success($res);
     }
 }
