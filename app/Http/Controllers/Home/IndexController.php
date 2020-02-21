@@ -8,10 +8,13 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $list = Article::where([])->paginate(10);
-
+        $where = [];
+        $kw = $request->kw;
+        $kw && $where[] = ['title','like',"%{$kw}%"];
+        $list = Article::with('user','tags','category')->where($where)->paginate(10);
+        //dump($list);
         return view('home.index.index',compact('list'));
     }
 }
