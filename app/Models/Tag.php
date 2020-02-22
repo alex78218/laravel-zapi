@@ -11,4 +11,9 @@ class Tag extends Model
 
 
     protected $fillable = ['tagname','sort'];
+
+    public function articles()
+    {
+        return $this->belongsToMany(Article::class,'article_tags');
+    }
 }

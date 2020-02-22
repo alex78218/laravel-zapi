@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +27,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        // 标签
+        view()->composer('*',function($view){
+            $tags = Tag::withCount('articles')->where([])->orderBy('sort','asc')->get();
+            //dd($tags);
+            $view->with('tags',$tags);
+        });
+
+        // 分类
+        view()->composer('*',function($view){
+            $categories = Category::where([])->orderBy('sort','asc')->limit(6)->get();
+            $view->with('categories',$categories);
+        });
     }
 }
