@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-12">
-        <nav class="navbar navbar-expand-lg navbar-dark top-bg">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <a class="navbar-brand" href="/">{{ config('blog.name') }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@
                 </ul>
                 <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" name="kw" value="{{ request()->input('kw') }}" placeholder="输入搜索">
-                    <button class="btn btn-success my-2 my-sm-0" type="submit">搜索</button>
+                    <button class="btn btn-info my-2 my-sm-0" type="submit">搜索</button>
                 </form>
             </div>
         </nav>

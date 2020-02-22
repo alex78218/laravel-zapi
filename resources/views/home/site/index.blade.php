@@ -4,7 +4,7 @@
     @foreach($list as $v)
         <div class="row">
             <div class="col-12">
-                <div class="card  mt-20" >
+                <div class="card  mt-10" >
                     <div class="card-body">
                         <a href="{{ url('article',$v->id) }}"><h5 class="card-title">{{ $v->title }}</h5></a>
                         <p class="card-text">
@@ -27,7 +27,7 @@
         </div>
     @endforeach
 
-    <nav aria-label="Page navigation" class="mt-20">
+    <nav aria-label="Page navigation" class="mt-10">
         <ul class="pagination justify-content-center">
             {{ $list->appends(['kw'=>request()->input('kw')])->links() }}
         </ul>
