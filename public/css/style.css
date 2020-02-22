@@ -48,7 +48,10 @@ html, body {
 .top-bg{
     background-color:#0b0b0b;
 }
-
+.footer-bg{
+    background-color: #353f4a;
+    color: #bfbdbd;
+}
 .info-tag p small{
     margin-right:20px;
 }

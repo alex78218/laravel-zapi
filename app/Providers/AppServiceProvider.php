@@ -30,6 +30,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+
+        // 分类
+        view()->composer('home.layout',function($view){
+            $categories = Category::where([])->orderBy('sort','asc')->limit(6)->get();
+            $articleTotal = Article::count();
+            $view->with(compact('categories','articleTotal'));
+        });
+
         // 标签
         view()->composer('home.components.sidebar',function($view){
             // $tags = Tag::withCount('articles')->where([])->orderBy('sort','asc')->get();
@@ -44,12 +52,6 @@ class AppServiceProvider extends ServiceProvider
                 return $item;
             });
             $view->with('tags',$tags);
-        });
-
-        // 分类
-        view()->composer('home.layout',function($view){
-            $categories = Category::where([])->orderBy('sort','asc')->limit(6)->get();
-            $view->with('categories',$categories);
         });
 
         // 归档

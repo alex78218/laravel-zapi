@@ -39,12 +39,10 @@
     <!-- 内容结束 -->
 
     <!-- 底部开始 -->
-    <div class="container-fluid mt-2 top-bg" style="min-height:50px;text-align: center;font-size:14px">
+    <div class="container-fluid mt-2 footer-bg" style="min-height:50px;text-align: center;font-size:14px">
         <div class="row">
             <div class="col-12">
-                <p class="align-middle align-self-center mx-auto">
-                    <p>zven的博客</p>
-                    <p>Copyright © 2020 All Rights Reserved </p>
+                @include('home.components.footer')
             </div>
         </div>
     </div>
