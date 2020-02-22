@@ -20,4 +20,5 @@ Route::prefix('')->namespace('Home')->group(function() {
     Route::get('/','SiteController@index')->name('index');
     Route::get('category/{id}','SiteController@category')->name('category');
     Route::get('tag/{id}','SiteController@tag')->name('tag');
+    Route::get('note','SiteController@note')->name('note');
 });

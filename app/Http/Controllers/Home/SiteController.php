@@ -10,11 +10,10 @@ class SiteController extends Controller
 {
     public function index(Request $request)
     {
-        echo $request->route()->getName();
         $where = [];
         $kw = $request->kw;
         $kw && $where[] = ['title','like',"%{$kw}%"];
-        $list = Article::with(['user','tags','category'])->where($where)->paginate(10);
+        $list = Article::with(['user','tags','category'])->where($where)->paginate(8);
         //dump($list);
         return view('home.site.index',compact('list'));
     }
@@ -23,19 +22,23 @@ class SiteController extends Controller
     {
         $where = [];
         $where[] = ['category_id','=',$request->id];
-        $list = Article::with(['user','tags','category'])->where($where)->paginate(10);
+        $list = Article::with(['user','tags','category'])->where($where)->paginate(8);
         //dump($list);
         return view('home.site.index',compact('list'));
     }
 
     public function tag(Request $request)
     {
-        echo $request->route()->getName();
         $where = [];
         $kw = $request->kw;
         $kw && $where[] = ['title','like',"%{$kw}%"];
-        $list = Article::with(['user','tags','category'])->where($where)->paginate(10);
+        $list = Article::with(['user','tags','category'])->where($where)->paginate(8);
         //dump($list);
         return view('home.site.index',compact('list'));
+    }
+
+    public function note()
+    {
+        return view('home.site.note');
     }
 }

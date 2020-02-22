@@ -11,6 +11,7 @@ $factory->define(Article::class, function (Faker $faker) {
         'title' => $faker->sentence,
         'category_id' => $faker->numberBetween(1, 10),
         'content' => $faker->paragraph,
-        'views' => $faker->numberBetween(0,200)
+        'views' => $faker->numberBetween(0,200),
+        'created_at' => date("Y-m-d H:i:s",time()-rand(1,360)*24*60*60)
     ];
 });
