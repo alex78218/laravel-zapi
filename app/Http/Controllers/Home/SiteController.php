@@ -4,37 +4,56 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Article;
+use App\Models\ArticleTag;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class SiteController extends Controller
 {
     public function index(Request $request)
     {
-        $where = [];
         $kw = $request->kw;
-        $kw && $where[] = ['title','like',"%{$kw}%"];
-        $list = Article::with(['user','tags','category'])->where($where)->paginate(8);
-        //dump($list);
+        $month = $request->month;
+        $list = Article::with(['user','tags','category'])
+            ->when($kw,function($query) use ($kw){
+                $query->where('title','like',"%{$kw}%");
+            })
+            ->when($month,function($query) use ($month){
+                $begin = date("Y-m-01",strtotime($month));
+                $end = date("Y-m-d",strtotime("$month +1 month"));
+                $query->whereBetween('created_at',[$begin,$end]);
+            })
+            ->paginate(config('blog.perpage'));
+
         return view('home.site.index',compact('list'));
     }
 
-    public function category(Request $request)
+    public function category($id)
     {
-        $where = [];
-        $where[] = ['category_id','=',$request->id];
-        $list = Article::with(['user','tags','category'])->where($where)->paginate(8);
-        //dump($list);
+        $list = Article::with(['user','tags','category'])
+            ->where('category_id',$id)
+            ->paginate(config('blog.perpage'));
+
         return view('home.site.index',compact('list'));
     }
 
-    public function tag(Request $request)
+    public function tag($id)
     {
-        $where = [];
-        $kw = $request->kw;
-        $kw && $where[] = ['title','like',"%{$kw}%"];
-        $list = Article::with(['user','tags','category'])->where($where)->paginate(8);
-        //dump($list);
-        return view('home.site.index',compact('list'));
+        $tag = Tag::find($id);
+        $list = Article::with(['user','category'])
+            ->whereHas('tags',function($query) use ($id){
+                return $query->where('tags.id',$id);
+            })
+            ->paginate(config('blog.perpage'));
+
+        return view('home.site.index',compact('tag','list'));
+    }
+
+    public function article($id)
+    {
+        $article = Article::with(['user','category','tags'])->find($id);
+
+        return view('home.site.article',compact('article'));
     }
 
     public function note()

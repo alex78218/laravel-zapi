@@ -21,7 +21,9 @@
             </div>
             <ul class="list-group list-group-flush">
                 @foreach($monthCal as $v)
-                <li class="list-group-item">{{  $v->amonth }}&nbsp;({{ $v->acount }})</li>
+                    <li class="list-group-item">
+                        <a href="{{ url('/?month='.$v->amonth) }}">{{  $v->amonth }}&nbsp;({{ $v->acount }})</a>
+                    </li>
                 @endforeach
             </ul>
         </div>

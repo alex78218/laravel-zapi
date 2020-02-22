@@ -24,7 +24,7 @@
                                 <a class="nav-link" href="{{ url('note') }}">小记</a>
                             </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
+                <form class="form-inline my-2 my-lg-0" action="/">
                     <input class="form-control mr-sm-2" type="search" name="kw" value="{{ request()->input('kw') }}" placeholder="输入搜索">
                     <button class="btn btn-info my-2 my-sm-0" type="submit">搜索</button>
                 </form>

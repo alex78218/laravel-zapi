@@ -8,5 +8,6 @@
  */
 
 return  [
-    'name' => 'ZVEN-BLOG'
+    'name' => 'ZVEN-BLOG',
+    'perpage' => 10
 ];
