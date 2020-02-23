@@ -25,8 +25,12 @@
                             </li>
                 </ul>
                 <form class="form-inline my-2 my-lg-0" action="/">
-                    <input class="form-control mr-sm-2" type="search" name="kw" value="{{ request()->input('kw') }}" placeholder="输入搜索">
-                    <button class="btn btn-info my-2 my-sm-0" type="submit">搜索</button>
+                    <div class="input-group my-2">
+                    <input class="form-control" type="search" name="kw" value="{{ request()->input('kw') }}" placeholder="输入搜索">
+                    <div class="input-group-append">
+                        <button class="btn btn-info my-2 my-sm-0" type="submit">搜索</button>
+                    </div>
+                    </div>
                 </form>
             </div>
         </nav>
