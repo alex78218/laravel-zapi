@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\ArticleTag;
 use App\Models\Category;
 use App\Models\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 
@@ -59,5 +60,7 @@ class AppServiceProvider extends ServiceProvider
             $monthCal = DB::select("select count(*) as acount,date_format(created_at,'%Y-%m') as amonth from articles group by amonth order by amonth desc");
             $view->with('monthCal',$monthCal);
         });
+
+
     }
 }

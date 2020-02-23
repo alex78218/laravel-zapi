@@ -52,8 +52,10 @@ class SiteController extends Controller
     public function article($id)
     {
         $article = Article::with(['user','category','tags'])->find($id);
+        $prev = Article::withoutTrashed()->where('id','<',$id)->orderBy('id','desc')->first();
+        $next = Article::withoutTrashed()->where('id','>',$id)->orderBy('id','asc')->first();
 
-        return view('home.site.article',compact('article'));
+        return view('home.site.article',compact('article','prev','next'));
     }
 
     public function note()

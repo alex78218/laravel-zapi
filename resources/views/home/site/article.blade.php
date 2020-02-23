@@ -24,10 +24,18 @@
                             </small>
                         </p>
                         <p>
-                            <a href="#" class="card-link">上一篇</a>
+                            @if (empty($prev))
+                                <a href="javascript:void(0)" class="card-link">上一篇：没有了</a>
+                            @else
+                                <a href="{{ url('article',[$prev->id]) }}" class="card-link">上一篇：{{ $prev->title }}</a>
+                            @endif
                         </p>
                         <p>
-                            <a href="#" class="card-link">下一篇</a>
+                            @if (empty($next))
+                                <a href="javascript:void(0)" class="card-link">下一篇：没有了</a>
+                            @else
+                                <a href="{{ url('article',[$next->id]) }}" class="card-link">下一篇：{{ $next->title }}</a>
+                            @endif
                         </p>
                     </div>
                 </div>
