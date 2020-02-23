@@ -45,7 +45,7 @@ class SiteController extends Controller
                 return $query->where('tags.id',$id);
             })
             ->paginate(config('blog.perpage'));
-
+//dd($tag);
         return view('home.site.index',compact('tag','list'));
     }
 

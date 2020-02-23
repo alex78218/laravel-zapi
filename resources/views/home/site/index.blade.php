@@ -16,8 +16,8 @@
                         <p class="card-text">{{ substr($v->content,0,50) }}</p>
                         <p class="card-text">
                             <small class="text-muted"><i class="iconfont icon-tag"></i>
-                                @foreach($v->tags as $tag)
-                                    <a href="{{ url('tag',$tag->id) }}">{{ $tag->tagname }}</a>
+                                @foreach($v->tags as $t)
+                                    <a href="{{ url('tag',$t->id) }}">{{ $t->tagname }}</a>
                                 @endforeach
                             </small>
                         </p>

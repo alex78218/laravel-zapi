@@ -18,8 +18,8 @@
                         </p>
                         <p class="card-text">
                             <small class="text-muted"><i class="iconfont icon-tag"></i>
-                                @foreach($article->tags as $tag)
-                                    <a href="{{ url('tag',$tag->id) }}">{{ $tag->tagname }}
+                                @foreach($article->tags as $v)
+                                    <a href="{{ url('tag',$v->id) }}">{{ $v->tagname }}
                                 @endforeach
                             </small>
                         </p>
