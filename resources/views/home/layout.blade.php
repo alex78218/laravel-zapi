@@ -20,7 +20,7 @@
     <body>
 
     <!-- 顶部开始 -->
-    <div class="container-fluid bg-dark fixed-top">
+    <div class="container-fluid bg-dark fixed-top align-self-center ">
         @include('home.components.top')
     </div>
     <!-- 顶部结束 -->

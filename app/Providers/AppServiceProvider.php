@@ -57,7 +57,12 @@ class AppServiceProvider extends ServiceProvider
 
         // 归档
         view()->composer('home.components.sidebar',function($view){
-            $monthCal = DB::select("select count(*) as acount,date_format(created_at,'%Y-%m') as amonth from articles group by amonth order by amonth desc");
+            $monthCal = Article::withoutTrashed()
+                ->select(DB::raw('count(*) as acount,date_format(created_at,"%Y-%m") as amonth'))
+                ->groupBy('amonth')
+                ->orderBy('amonth','desc')
+                ->get();
+
             $view->with('monthCal',$monthCal);
         });
 
