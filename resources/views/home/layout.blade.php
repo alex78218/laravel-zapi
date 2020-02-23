@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ config('blog.name') }}</title>
-        {{--<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">--}}
-        <link rel="stylesheet" href="{{ asset('css/bootstrap-cosmo.min.css?t='.time()) }}">
+        <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+        {{--<link rel="stylesheet" href="{{ asset('css/bootstrap-cosmo.min.css?t='.time()) }}">--}}
 
         <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
@@ -30,6 +30,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-12 col-md-8">
+
                     @if (request()->input('kw'))
                         <h2>搜索&nbsp;{{ request()->input('kw') }}&nbsp;的结果</h2>
                     @endif
@@ -39,6 +40,7 @@
                     @if (Route::currentRouteName()=='tag')
                         <h2>标签&nbsp;{{ $tag->tagname }}&nbsp;的结果</h2>
                     @endif
+
                     @yield('content')
                 </div>
 

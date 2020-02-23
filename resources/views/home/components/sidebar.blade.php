@@ -5,8 +5,11 @@
                 标签
             </div>
             <div class="card-body">
-                @foreach($tags as $t)
-                    <a href="{{ url('tag',$t->id) }}" class="btn btn-primary m-2">{{ $t->tagname }}&nbsp;({{ $t->article_count }})</a>
+                @foreach($tags as $k=>$t)
+                    @php
+                        $btnClass = ['btn-primary','btn-secondary','btn-success','btn-danger','btn-warning','btn-info'];
+                    @endphp
+                    <a href="{{ url('tag',$t->id) }}" class="btn {{ $btnClass[$k%count($btnClass)] }}" style="margin:3px;">{{ $t->tagname }}&nbsp;({{ $t->article_count }})</a>
                 @endforeach
             </div>
         </div>

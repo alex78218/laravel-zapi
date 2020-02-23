@@ -17,7 +17,7 @@
                         <p class="card-text">
                             <small class="text-muted"><i class="iconfont icon-tag"></i>
                                 @foreach($v->tags as $tag)
-                                    <a href="{{ url('tag',$tag->id) }}">{{ $tag->tagname }}
+                                    <a href="{{ url('tag',$tag->id) }}">{{ $tag->tagname }}</a>
                                 @endforeach
                             </small>
                         </p>
@@ -27,9 +27,10 @@
         </div>
     @endforeach
 
-    <nav aria-label="Page navigation" class="mt-10">
-        <ul class="pagination justify-content-center">
-            {{ $list->appends(['kw'=>request()->input('kw'),'month'=>request()->input('month')])->links() }}
-        </ul>
-    </nav>
+    <div class="row justify-content-center mt-20">
+        <div class="col-12">
+        {{ $list->appends(['kw'=>request()->input('kw'),'month'=>request()->input('month')])->render('home.components.pagination') }}
+        </div>
+    </div>
+
 @endsection
