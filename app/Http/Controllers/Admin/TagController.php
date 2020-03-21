@@ -14,15 +14,19 @@ class TagController extends Controller
     public function index(Request $request)
     {
         $where = [];
-        if($request->keyword){
-            $where[] = ['tagname','like','%{$request->keyword}%'];
-        }
+        $kw = $request->input('kw');
+        $kw && $where[] = ['tagname','like',"%{$kw}%"];
+
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
+        $perPage    = $request->input('per_page');
 
-        $list = Tag::where($where)->orderBy($orderField,$orderType)->get()->toArray();
+        $paginator = Tag::withoutTrashed()
+            ->where($where)
+            ->orderBy($orderField,$orderType)
+            ->paginate($perPage);
 
-        return $this->success(compact('list'));
+        return $this->pageData($paginator);
     }
 
     public function all()

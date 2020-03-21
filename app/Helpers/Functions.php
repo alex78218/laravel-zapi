@@ -1,4 +1,5 @@
 <?php
+use Illuminate\Support\Facades\DB;
 
 if (!function_exists('p')) {
     // 传递数据以易于阅读的样式格式化后输出
@@ -62,5 +63,12 @@ if(!function_exists('listToTree')){
             }
         }
         return $tree;
+    }
+}
+
+if(!function_exists('echosql')){
+    function echosql(){
+        print_r(DB::getQueryLog());
+        die();
     }
 }

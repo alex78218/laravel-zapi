@@ -7,6 +7,7 @@ use App\Exceptions\ApiException;
 use App\Models\Article;
 use App\Models\ArticleTag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -14,14 +15,14 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         $where = [];
-        if($request->keyword){
-            $where[] = ['title','like','%{$request->keyword}%'];
-        }
+        $kw = $request->input('kw');
+        $kw && $where[] = ['title','like',"%{$kw}%"];
+
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
         $perPage    = $request->input('per_page');
 
-        $paginator = Article::withTrashed()
+        $paginator = Article::withoutTrashed()
                 ->where($where)
                 ->with(['category','tags'])
                 ->orderBy($orderField,$orderType)
