@@ -33,15 +33,15 @@ class ArticleController extends Controller
     public function store(Request $request,ArticleTag $articleTagModel)
     {
         $article = Article::create($request->all());
-        if($article && $request->tag_ids){
-            $articleTagModel->addTagIds($article->id,$request->tag_ids);
+        if($article && $request->input('tag_ids')){
+            $articleTagModel->addTagIds($article->id,$request->input('tag_ids'));
         }
         return $this->success(['id'=>$article->id]);
     }
 
     public function show($id)
     {
-        $data = Article::with('category')->findOrFail($id);
+        $data = Article::with(['category','tags'])->findOrFail($id);
         return $this->success($data);
     }
 
@@ -50,8 +50,8 @@ class ArticleController extends Controller
         $res = Article::withTrashed()->find($id)->update($request->except('tag_ids'));
         if($res){
             ArticleTag::where('article_id',$id)->forceDelete();
-            if($request->tag_ids){
-                $articleTagModel->addTagIds($id,$request->tag_ids);
+            if($request->input('tag_ids')){
+                $articleTagModel->addTagIds($id,$request->input('tag_ids'));
             }
         }
         return $this->success($res);

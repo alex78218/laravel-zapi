@@ -48,6 +48,7 @@ if(!function_exists('listToTree')){
     {
         $list = [];
         foreach($data as $row){
+            $row['children'] = [];
             $list[$row['id']] = $row;
         }
 

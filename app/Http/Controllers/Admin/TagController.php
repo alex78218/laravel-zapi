@@ -25,6 +25,16 @@ class TagController extends Controller
         return $this->success(compact('list'));
     }
 
+    public function all()
+    {
+        $list = Tag::where([])
+            ->orderBy('id','asc')
+            ->get()
+            ->toArray();
+
+        return $this->success(compact('list'));
+    }
+
     public function store(Request $request)
     {
         $data = Tag::create($request->all());

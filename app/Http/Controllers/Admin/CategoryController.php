@@ -22,6 +22,18 @@ class CategoryController extends Controller
         return $this->success(compact('list'));
     }
 
+    public function all()
+    {
+        $list = Category::where([])
+            ->orderBy('parent_id','asc')
+            ->orderBy('sort','asc')
+            ->orderBy('id','asc')
+            ->get();
+
+        $list = listToTree($list->toArray());
+        return $this->success(compact('list'));
+    }
+
     public function store(Request $request)
     {
         $data = Category::create($request->all());

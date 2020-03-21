@@ -16,7 +16,7 @@ Trait ApiResponse
             'per_page'      => $page['per_page'],
             'list'          => $page['data']
         ];
-        return response()->json($data);
+        return $this->success($data);
     }
 
     public function success($data,$codeEnum=CodeEnum::SUCCESS)

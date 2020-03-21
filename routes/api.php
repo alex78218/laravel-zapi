@@ -34,6 +34,7 @@ Route::prefix('')->namespace('Admin')->group(function(){
 
     Route::prefix('tag')->group(function(){
         Route::any('index','TagController@index')->name('tag.index');
+        Route::any('all','TagController@all')->name('tag.all');
         Route::any('store','TagController@store')->name('tag.store');
         Route::any('show/{id}','TagController@show')->name('tag.show');
         Route::any('update/{id}','TagController@update')->name('tag.update');
@@ -43,6 +44,7 @@ Route::prefix('')->namespace('Admin')->group(function(){
 
     Route::prefix('category')->group(function(){
         Route::any('index','CategoryController@index')->name('category.index');
+        Route::any('all','CategoryController@all')->name('category.all');
         Route::any('store','CategoryController@store')->name('category.store');
         Route::any('show/{id}','CategoryController@show')->name('category.show');
         Route::any('update/{id}','CategoryController@update')->name('category.update');
@@ -68,4 +70,6 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::any('destroy/{id}','RoleController@destroy')->name('role.destroy');
         Route::any('forceDelete/{id}','RoleController@forceDelete')->name('role.forceDelete');
     });
+
+    Route::any('test','TestController@index')->name('test.index');
 });
