@@ -19,7 +19,7 @@ class FileController extends Controller
             if($file->isValid()){
                 //$filename = $file->getClientOriginalName();
                 $path = Storage::putFile('article',$file);
-                $data[] = ['pos'=>$pos, 'url'=>env('APP_URL').Storage::url($path)];
+                $data[] = ['pos'=>$pos, 'url'=>config('app.url').Storage::url($path)];
             }
         }
         return $this->success($data);

@@ -10,11 +10,14 @@ class TestController extends Controller
 
     public function index(Request $request)
     {
+        echo config('app.url');
+        echo env('APP_URL');
+
         //echo 111;die();
-        $es = new EsArticle();
+        //$es = new EsArticle();
         //$es->get();
         //$es->createIndex();
-        $es->store();
+        //$es->store();
     }
 
 
