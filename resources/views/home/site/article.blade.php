@@ -8,7 +8,7 @@
                     <div class="card-body">
                         <h2 class="card-title">{{ $article->title }}</h2>
                         <h6 class="card-subtitle mb-2 text-muted">
-                            <small class="text-muted"><i class="iconfont icon-user"></i>{{ $article->user->name }}</small>
+                            <small class="text-muted"><i class="iconfont icon-user"></i>{{ data_get($article,'user.name')}}</small>
                             <small class="text-muted"><i class="iconfont icon-riqi2"></i>{{ $article->created_at }}</small>
                             <small class="text-muted"><i class="iconfont icon-category"></i><a href="{{ url('category',$article->category->id) }}">{{ $article->category->catename }}</a></small>
                             <small class="text-muted"><i class="iconfont icon-view"></i>{{ $article->views }}</small>

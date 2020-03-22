@@ -12,14 +12,20 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
-        $list = Category::where([])
-            ->orderBy('parent_id','asc')
-            ->orderBy('sort','asc')
-            ->orderBy('id','asc')
-            ->get();
+        $where = [];
+        $kw = $request->input('kw');
+        $kw && $where[] = ['catename','like',"%{$kw}%"];
 
-        $list = listToTree($list->toArray());
-        return $this->success(compact('list'));
+        $orderField = $request->input('order_field','id');
+        $orderType  = $request->input('order_type','desc');
+        $perPage    = $request->input('per_page');
+
+        $paginator = Category::withoutTrashed()
+            ->where($where)
+            ->orderBy($orderField,$orderType)
+            ->paginate($perPage);
+
+        return $this->pageData($paginator);
     }
 
     public function all()
