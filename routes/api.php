@@ -71,5 +71,9 @@ Route::prefix('')->namespace('Admin')->group(function(){
         Route::any('forceDelete/{id}','RoleController@forceDelete')->name('role.forceDelete');
     });
 
+    Route::prefix('file')->group(function(){
+        Route::post('upload','FileController@upload')->name('file.upload');
+    });
+
     Route::any('test','TestController@index')->name('test.index');
 });
