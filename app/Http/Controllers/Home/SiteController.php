@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 class SiteController extends Controller
 {
     public function index(Request $request)
-    {
+    {error_log('dadadad');
         $kw = $request->kw;
         $month = $request->month;
         $list = Article::with(['user','tags','category'])
@@ -45,7 +45,7 @@ class SiteController extends Controller
                 return $query->where('tags.id',$id);
             })
             ->paginate(config('blog.perpage'));
-//dd($tag);
+
         return view('home.site.index',compact('tag','list'));
     }
 

@@ -7,6 +7,7 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use App\Traits\ApiResponse;
 use League\CommonMark\Inline\Element\Code;
+use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
 {
@@ -41,7 +42,14 @@ class Handler extends ExceptionHandler
      */
     public function report(Exception $exception)
     {
-        parent::report($exception);
+        //parent::report($exception);
+        $log = [
+            "[Code:{$exception->getCode()}]",
+            "{$exception->getMessage()}",
+            "on line {$exception->getLine()}",
+            "of file {$exception->getFile()}"
+        ];
+        Log::error(implode(' ', $log));
     }
 
     /**

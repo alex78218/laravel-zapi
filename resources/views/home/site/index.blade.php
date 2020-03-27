@@ -8,9 +8,9 @@
                     <div class="card-body">
                         <a href="{{ url('article',$v->id) }}"><h5 class="card-title">{{ $v->title }}</h5></a>
                         <p class="card-text">
-                            <small class="text-muted"><i class="iconfont icon-user"></i>{{ $v->user->name }}</small>
+                            <small class="text-muted"><i class="iconfont icon-user"></i>{{ $v->user['name'] }}</small>
                             <small class="text-muted"><i class="iconfont icon-riqi2"></i>{{ $v->created_at }}</small>
-                            <small class="text-muted"><i class="iconfont icon-category"></i><a href="{{ url('category',$v->category->id) }}">{{ $v->category->catename }}</a></small>
+                            <small class="text-muted"><i class="iconfont icon-category"></i><a href="{{ url('category', $v->category['id']) }}">{{ $v->category['catename'] }}</a></small>
                             <small class="text-muted"><i class="iconfont icon-view"></i>{{ $v->views }}</small>
                         </p>
                         <p class="card-text">{{ substr($v->content,0,50) }}</p>
