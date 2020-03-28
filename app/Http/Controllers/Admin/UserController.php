@@ -51,7 +51,14 @@ class UserController extends Controller
 
     public function update(Request $request,$id)
     {
-        $res = User::withTrashed()->find($id)->update($request->all());
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email
+        ];
+        if($request->password){
+            $data['[password'] => Hash::make($request->password);
+        }
+        $res = User::withTrashed()->find($id)->update($data);
         return $this->success($res);
     }
 

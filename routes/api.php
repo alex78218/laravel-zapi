@@ -13,16 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth.api')->namespace('Admin')->group(function(){
+// middleware('auth.api')
+Route::namespace('Admin')->group(function(){
     Route::prefix('auth')->group(function(){
         Route::any('login', 'AuthController@login')->name('auth.login');
         Route::any('logout', 'AuthController@logout')->name('auth.logout');
         Route::any('refresh', 'AuthController@refresh')->name('auth.refresh');
-        Route::any('me', 'AuthController@me')->name('auth.me')->name('auth.me');
+        Route::any('info', 'AuthController@info')->name('auth.info')->name('auth.me');
     });
 });
 
-Route::prefix('')->namespace('Admin')->group(function(){
+Route::middleware('auth.api')->prefix('')->namespace('Admin')->group(function(){
     Route::prefix('article')->group(function(){
         Route::any('index','ArticleController@index')->name('article.index');
         Route::any('store','ArticleController@store')->name('article.store');

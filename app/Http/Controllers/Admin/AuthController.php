@@ -27,10 +27,12 @@ class AuthController extends Controller
      */
     public function login()
     {
-        $credentials = request(['name', 'password']);
+        $credentials = request(['username', 'password']);
+        $credentials['name'] = $credentials['username'];
+        unset($credentials['username']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return $this->error([],CodeEnum::ERROR_NOT_AUTH);
+            return $this->error([],CodeEnum::ERROR_NO_AUTH);
         }
 
         return $this->respondWithToken($token);
@@ -41,12 +43,12 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function me()
+    public function info()
     {
         if(!auth()->user()){
-            return $this->error([],CodeEnum::ERROR_NOT_AUTH);
+            return $this->error([],CodeEnum::ERROR_LOGIN);
         }
-        return response()->json(auth()->user());
+        return $this->success(auth()->user());
     }
 
     /**
@@ -57,8 +59,7 @@ class AuthController extends Controller
     public function logout()
     {
         auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
+        return $this->success([]);
     }
 
     /**
@@ -80,10 +81,11 @@ class AuthController extends Controller
      */
     protected function respondWithToken($token)
     {
-        return response()->json([
+        $data = [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
-        ]);
+            'expires_in' => auth()->factory()->getTTL()
+        ];
+        return $this->success($data);
     }
 }

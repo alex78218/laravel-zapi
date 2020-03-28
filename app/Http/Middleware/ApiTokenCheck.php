@@ -20,8 +20,9 @@ class ApiTokenCheck
     public function handle($request, Closure $next)
     {
         if(!auth()->user()){
-            return $this->error([],CodeEnum::ERROR_NO_AUTH);
+            //return $this->error([],CodeEnum::ERROR_LOGIN);
         }
+
         return $next($request);
     }
 }
