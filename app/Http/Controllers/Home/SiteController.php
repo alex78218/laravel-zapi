@@ -7,6 +7,7 @@ use App\Models\Article;
 use App\Models\ArticleTag;
 use App\Models\Tag;
 use Illuminate\Http\Request;
+use Parsedown;
 
 class SiteController extends Controller
 {
@@ -23,6 +24,7 @@ class SiteController extends Controller
                 $end = date("Y-m-d",strtotime("$month +1 month"));
                 $query->whereBetween('created_at',[$begin,$end]);
             })
+            ->orderBy('id','desc')
             ->paginate(config('blog.perpage'));
 
         return view('home.site.index',compact('list'));
@@ -52,6 +54,9 @@ class SiteController extends Controller
     public function article($id)
     {
         $article = Article::with(['user','category','tags'])->find($id);
+        $article['content'] = Parsedown::instance()->text($article['content']);
+        //echo $article['content'];die();
+
         $prev = Article::withoutTrashed()->where('id','<',$id)->orderBy('id','desc')->first();
         $next = Article::withoutTrashed()->where('id','>',$id)->orderBy('id','asc')->first();
 

@@ -14,7 +14,7 @@
                             <small class="text-muted"><i class="iconfont icon-view"></i>{{ $article->views }}</small>
                         </h6>
                         <p class="card-text">
-                            {{ $article->content }}
+                            {!! $article->content; !!}
                         </p>
                         <p class="card-text">
                             <small class="text-muted"><i class="iconfont icon-tag"></i>
