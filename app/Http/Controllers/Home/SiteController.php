@@ -11,9 +11,9 @@ use Illuminate\Http\Request;
 class SiteController extends Controller
 {
     public function index(Request $request)
-    {error_log('dadadad');
-        $kw = $request->kw;
-        $month = $request->month;
+    {
+        $kw = $request->input('kw');
+        $month = $request->input('month');
         $list = Article::with(['user','tags','category'])
             ->when($kw,function($query) use ($kw){
                 $query->where('title','like',"%{$kw}%");

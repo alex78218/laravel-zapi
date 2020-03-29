@@ -29,9 +29,9 @@ class QueryListener
     {
         try{
             if (true || env('APP_DEBUG') == true) {
-                $sql = str_replace("?", "'%s'", $event->sql);
-                $sql = str_replace("%", "@", $sql);
+                $sql = str_replace(['%','?'], ['%%','%s'], $event->sql);
                 foreach ($event->bindings as $i => $binding) {
+
                     if ($binding instanceof DateTime) {
                         $event->bindings[$i] = $binding->format('\'Y-m-d H:i:s\'');
                     } else {
@@ -41,7 +41,7 @@ class QueryListener
                     }
                 }
                 $log = vsprintf($sql, $event->bindings);
-                $log = $log.'  [RunTime:'.$event->time.'ms] ';
+                $log = $log." [RunTime:{$event->time}ms] ";
                 Log::channel('sql')->info($log);
             }
         }catch (Exception $e){
