@@ -13,10 +13,10 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        $kw = $request->input('kw');
         $where = [];
-        if($request->keyword){
-            $where[] = ['name','like','%{$request->keyword}%'];
-        }
+        $kw && $where[] = ['name','like',"%{$kw}%"];
+
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
         $perPage    = $request->input('per_page');
@@ -30,9 +30,9 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-        $password = $request->password;
-        $name = $request->name;
-        $email = $request->email;
+        $password = $request->input('password');
+        $name = $request->input('name');
+        $email = $request->input('email','');
 
         $password = Hash::make($password);
         $user = User::create([
@@ -52,13 +52,14 @@ class UserController extends Controller
     public function update(Request $request,$id)
     {
         $data = [
-            'name' => $request->name,
-            'email' => $request->email
+            'name'  => $request->input('name'),
+            'email' => $request->input('email')
         ];
-        if($request->password){
-            $data['[password'] => Hash::make($request->password);
+        $password = $request->input('password');
+        if($password){
+            $data['password'] = Hash::make($password);
         }
-        $res = User::withTrashed()->find($id)->update($data);
+        $res = User::find($id)->update($data);
         return $this->success($res);
     }
 
@@ -70,7 +71,7 @@ class UserController extends Controller
 
     public function forceDelete($id)
     {
-        $res = User::withTrashed()->find($id)->forceDelete();
+        $res = User::find($id)->forceDelete();
         return $this->success($res);
     }
 }
