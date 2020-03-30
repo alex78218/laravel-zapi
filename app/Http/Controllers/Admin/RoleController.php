@@ -6,10 +6,7 @@ use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
 use App\Models\Role;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role as PermissionRole;
 
 class RoleController extends Controller
 {
@@ -23,7 +20,7 @@ class RoleController extends Controller
         $kw = $request->input('kw');
         $where = [];
         if($kw){
-            $where[] = ['name','like','%{$kw}%'];
+            $where[] = ['name','like',"%{$kw}%"];
         }
         $orderField = $request->input('order_field','id');
         $orderType  = $request->input('order_type','desc');
@@ -38,7 +35,10 @@ class RoleController extends Controller
 
     public function store(Request $request)
     {
-        $role = PermissionRole::create($request->all());
+        $data = [
+            'name' => $request->input('name')
+        ];
+        $role = Role::create($request->all());
         $role->givePermissionTo($request->input('permissions'));
         return $this->success(['id'=>$role->id]);
     }
@@ -52,7 +52,7 @@ class RoleController extends Controller
     public function update(Request $request,$id)
     {
         Role::findOrFail($id)->update($request->all());
-        $role = PermissionRole::findById($id);
+        $role = Role::findById($id);
         $has = $role->getAllPermissions()->toArray();
         foreach($has as $h){
             if(!in_array($h['name'],$request->input('permissions'))){

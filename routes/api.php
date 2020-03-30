@@ -72,6 +72,16 @@ Route::middleware('auth.api')->prefix('')->namespace('Admin')->group(function(){
         Route::any('forceDelete/{id}','RoleController@forceDelete')->name('role.forceDelete');
     });
 
+    Route::prefix('permission')->group(function(){
+        Route::any('index','PermissionController@index')->name('permission.index');
+        Route::any('all','PermissionController@all')->name('permission.all');
+//        Route::any('store','TagController@store')->name('tag.store');
+//        Route::any('show/{id}','TagController@show')->name('tag.show');
+//        Route::any('update/{id}','TagController@update')->name('tag.update');
+//        Route::any('destroy/{id}','TagController@destroy')->name('tag.destroy');
+//        Route::any('forceDelete/{id}','TagController@forceDelete')->name('tag.forceDelete');
+    });
+
     Route::prefix('file')->group(function(){
         Route::post('upload','FileController@upload')->name('file.upload');
     });
