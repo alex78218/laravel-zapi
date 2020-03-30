@@ -6,9 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    protected $fillable = ['name','guard_name'];
+    protected $fillable = ['name','guard_name','remark'];
 
     protected $attributes = [
-        'guard_name' => 'api'
+        'guard_name' => 'api',
+        'remark' => ''
     ];
 }
