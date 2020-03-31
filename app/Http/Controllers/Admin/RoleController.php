@@ -45,7 +45,9 @@ class RoleController extends Controller
 
     public function show($id)
     {
-        $data = Role::findOrFail($id);
+        $role = Role::findById($id);
+        $data = $role->toArray();
+        $data['permissions'] = $role->getAllPermissions()->pluck('id');
         return $this->success($data);
     }
 

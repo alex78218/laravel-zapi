@@ -43,8 +43,11 @@ class SyncRoute extends Command
             'tag'       => '标签',
             'category'  => '分类',
             'user'      => '用户',
-            'role'      => '角色'
+            'role'      => '角色',
+            'file'      => '文件',
+            'permission'=> '权限',
         ];
+
         $actionMap = [
             'index'         => '列表',
             'all'           => '所有数据',
@@ -52,8 +55,11 @@ class SyncRoute extends Command
             'show'          => '详情',
             'update'        => '编辑',
             'destroy'       => '删除',
-            'forceDelete'   => '物理删除'
+            'forceDelete'   => '物理删除',
+            'upload'        => '上传'
         ];
+
+        $exceptModule = ['auth','test'];
 
         $routes = app()->routes->getRoutes();
         $list = [];
@@ -61,11 +67,18 @@ class SyncRoute extends Command
             $path = explode('/',$v->uri);
             if($path[0]=='api' && $v->getName()){
                 list($module,$action) = explode('.',$v->getName());
+                if(in_array($module,$exceptModule)){
+                    continue;
+                }
                 $moduleName = $moduleMap[$module]??$module;
                 $actionName = $actionMap[$action]??$action;
-                $list[$k]['power_name'] = $moduleName.$actionName;
-                $list[$k]['name']       = $v->getName();
-                $list[$k]['guard_name'] = $path[0];
+
+                $list[$k] = [
+                    'module'     => $module,
+                    'power_name' => $moduleName.$actionName,
+                    'name'       => $v->getName(),
+                    'guard_name' => $path[0]
+                ];
             }
         }
 

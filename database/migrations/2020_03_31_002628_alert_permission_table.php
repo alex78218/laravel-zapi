@@ -15,6 +15,7 @@ class AlertPermissionTable extends Migration
     {
         Schema::table('permissions', function (Blueprint $table) {
             $table->string('power_name',64)->default('')->after('id');
+            $table->string('module',64)->default('')->after('id');
         });
 
         Schema::table('roles', function (Blueprint $table) {
@@ -32,6 +33,7 @@ class AlertPermissionTable extends Migration
     {
         Schema::table('permissions', function (Blueprint $table) {
             $table->dropColumn('power_name');
+            $table->dropColumn('module');
         });
 
         Schema::table('roles', function (Blueprint $table) {

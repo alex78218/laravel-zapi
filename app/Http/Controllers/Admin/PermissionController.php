@@ -31,11 +31,20 @@ class PermissionController extends Controller
 
     public function all()
     {
-        $list = Permission::where([])
+        $ret = Permission::where([])
             ->orderBy('id','asc')
             ->get()
             ->toArray();
 
+        $list = [];
+        foreach($ret as $r){
+            $module = $r['module'];
+            if(empty($list['module'])){
+                $list[$module]['module'] = $module;
+            }
+            $list[$module]['powers'][] = $r;
+        }
+        $list = array_values($list);
         return $this->success(compact('list'));
     }
 

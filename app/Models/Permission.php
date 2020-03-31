@@ -35,9 +35,10 @@ use Spatie\Permission\Models\Permission as SPermission;
  */
 class Permission extends SPermission
 {
-    protected $fillable = ['show_name','name','guard_name'];
+    protected $fillable = ['module','show_name','name','guard_name'];
 
     protected $attributes = [
+        'module' => '',
         'show_name' => '',
         'guard_name' => 'api',
     ];
