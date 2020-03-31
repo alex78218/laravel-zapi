@@ -181,6 +181,7 @@ return [
          */
         Barryvdh\Debugbar\ServiceProvider::class,
         Tymon\JWTAuth\Providers\LaravelServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
     ],
 
     /*
