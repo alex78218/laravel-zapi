@@ -9,7 +9,7 @@ Trait ApiResponse
 {
     public function pageData($paginator)
     {
-        $page = $paginator->toArray();
+        $page = is_array($paginator)?:$paginator->toArray();
         $data = [
             'total'         => $page['total'],
             'current_page'  => $page['current_page'],

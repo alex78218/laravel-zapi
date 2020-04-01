@@ -65,6 +65,7 @@ Route::middleware('auth.api')->prefix('')->namespace('Admin')->group(function(){
     Route::prefix('role')->group(function(){
         Route::any('test','RoleController@test')->name('role.test');
         Route::any('index','RoleController@index')->name('role.index');
+        Route::any('all','RoleController@all')->name('role.all');
         Route::any('store','RoleController@store')->name('role.store');
         Route::any('show/{id}','RoleController@show')->name('role.show');
         Route::any('update/{id}','RoleController@update')->name('role.update');

@@ -33,6 +33,16 @@ class RoleController extends Controller
         return $this->pageData($paginator);
     }
 
+    public function all()
+    {
+        $list = Role::where([])
+            ->orderBy('id','asc')
+            ->get()
+            ->toArray();
+
+        return $this->success(compact('list'));
+    }
+
     public function store(Request $request)
     {
         $data = [

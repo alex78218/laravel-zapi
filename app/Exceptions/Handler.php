@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
             "on line {$exception->getLine()}",
             "of file {$exception->getFile()}"
         ];
-        Log::error(implode(' ', $log));
+        Log::error(implode(' ',$log), array_slice($exception->getTrace(),0,2));
     }
 
     /**
@@ -69,6 +69,8 @@ class Handler extends ExceptionHandler
                 $err = CodeEnum::ERROR_SERVER;
             }
             return $this->error(null,$err);
+        }else{
+            //return $this->error(null,CodeEnum::ERROR_SERVER);
         }
 
         return parent::render($request, $exception);

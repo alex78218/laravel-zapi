@@ -13,6 +13,8 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+        //$this->authUser->syncRoles(1);
+        //$this->authUser->syncPermissions(194);
         $kw = $request->input('kw');
         $where = [];
         $kw && $where[] = ['name','like',"%{$kw}%"];
@@ -21,7 +23,8 @@ class UserController extends Controller
         $orderType  = $request->input('order_type','desc');
         $perPage    = $request->input('per_page');
 
-        $paginator = User::where($where)
+        $paginator = User::with('roles')
+            ->where($where)
             ->orderBy($orderField,$orderType)
             ->paginate($perPage);
 
@@ -40,12 +43,13 @@ class UserController extends Controller
             'email' => $email,
             'password' => $password
         ]);
+        $user->syncRoles($request->input('role_ids',[]));
         return $this->success($user);
     }
 
     public function show($id)
     {
-        $data = User::findOrFail($id);
+        $data = User::with('roles')->findOrFail($id);
         return $this->success($data);
     }
 
@@ -59,7 +63,9 @@ class UserController extends Controller
         if($password){
             $data['password'] = Hash::make($password);
         }
-        $res = User::find($id)->update($data);
+        $user = User::findOrFail($id);
+        $user->syncRoles($request->input('role_ids',[]));
+        $res = $user->update($data);
         return $this->success($res);
     }
 
