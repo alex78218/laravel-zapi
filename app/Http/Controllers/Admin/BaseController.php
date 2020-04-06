@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller as BaseController;
+use App\Http\Controllers\Controller;
 use App\Traits\ApiResponse;
 
-class Controller extends BaseController
+class BaseController extends Controller
 {
     use ApiResponse;
 

@@ -9,7 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-class PermissionController extends Controller
+class PermissionController extends BaseController
 {
 
     public function index(Request $request)

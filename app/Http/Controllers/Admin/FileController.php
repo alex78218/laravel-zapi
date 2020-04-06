@@ -7,7 +7,7 @@ use App\Exceptions\ApiException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
-class FileController extends Controller
+class FileController extends BaseController
 {
     public function upload(Request $request)
     {

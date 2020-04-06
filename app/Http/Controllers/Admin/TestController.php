@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role as PermissionRole;
 
-class TestController extends Controller
+class TestController extends BaseController
 {
 
     public function index(Request $request)

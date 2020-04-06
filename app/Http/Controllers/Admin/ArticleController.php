@@ -7,10 +7,11 @@ use App\Exceptions\ApiException;
 use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use App\Models\ArticleTag;
+use Faker\Provider\Base;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class ArticleController extends Controller
+class ArticleController extends BaseController
 {
 
     public function index(Request $request)

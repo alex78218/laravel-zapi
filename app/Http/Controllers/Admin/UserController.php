@@ -10,7 +10,7 @@ use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
-class UserController extends Controller
+class UserController extends BaseController
 {
 
     public function __construct()

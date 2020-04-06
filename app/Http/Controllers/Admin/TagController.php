@@ -8,7 +8,7 @@ use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 
-class TagController extends Controller
+class TagController extends BaseController
 {
 
     public function index(Request $request)
