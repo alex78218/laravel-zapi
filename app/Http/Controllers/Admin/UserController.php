@@ -39,7 +39,7 @@ class UserController extends BaseController
     {
         $data = [
             'name'      => $request->input('name'),
-            'email'     => $request->input('email'),
+            'email'     => $request->input('email')?:null,
             'password'  => Hash::make($request->input('password'))
         ];
         $user = User::create($data);
@@ -57,7 +57,7 @@ class UserController extends BaseController
     {
         $data = [
             'name'  => $request->input('name'),
-            'email' => $request->input('email')
+            'email' => $request->input('email')?:null
         ];
         if($request->input('password')){
             $data['password'] = Hash::make($request->input('password'));

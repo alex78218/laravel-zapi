@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
+use App\Http\Requests\RoleRequest;
 use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -43,11 +44,8 @@ class RoleController extends BaseController
         return $this->success(compact('list'));
     }
 
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
-        $data = [
-            'name' => $request->input('name')
-        ];
         $role = Role::create($request->all());
         $role->givePermissionTo($request->input('permissions'));
         return $this->success(['id'=>$role->id]);
@@ -61,7 +59,7 @@ class RoleController extends BaseController
         return $this->success($data);
     }
 
-    public function update(Request $request,$id)
+    public function update(RoleRequest $request,$id)
     {
         Role::findOrFail($id)->update($request->all());
         $role = Role::findById($id);

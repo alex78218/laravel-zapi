@@ -27,7 +27,7 @@ class UserRequest extends BaseRequest
         return [
             'name.required'     => '用户名不能为空',
             'name.between'      => '用户名长度为2-16字符',
-            'name.unique'       => '用户名已存在99',
+            'name.unique'       => '用户名已存在',
             'email.email'       => '邮箱格式错误',
             'email.unique'      => '邮箱已存在',
             'role_ids.array'    => '角色参数错误',

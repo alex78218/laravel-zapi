@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 
@@ -40,7 +41,7 @@ class CategoryController extends BaseController
         return $this->success(compact('list'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         $data = Category::create($request->all());
         return $this->success(['id'=>$data['id']]);
@@ -52,7 +53,7 @@ class CategoryController extends BaseController
         return $this->success($data);
     }
 
-    public function update(Request $request,$id)
+    public function update(CategoryRequest $request,$id)
     {
         $res = Category::withTrashed()->find($id)->update($request->all());
         return $this->success($res);

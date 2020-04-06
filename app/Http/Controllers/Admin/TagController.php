@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
+use App\Http\Requests\TagRequest;
 use App\Models\Article;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class TagController extends BaseController
         return $this->success(compact('list'));
     }
 
-    public function store(Request $request)
+    public function store(TagRequest $request)
     {
         $data = Tag::create($request->all());
         return $this->success(['id'=>$data['id']]);
@@ -51,7 +52,7 @@ class TagController extends BaseController
         return $this->success($data);
     }
 
-    public function update(Request $request,$id)
+    public function update(TagRequest $request,$id)
     {
         $res = Tag::withTrashed()->find($id)->update($request->all());
         return $this->success($res);
