@@ -4,9 +4,9 @@ namespace App\Exceptions;
 
 use App\Enums\CodeEnum;
 use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use App\Traits\ApiResponse;
-use League\CommonMark\Inline\Element\Code;
 use Illuminate\Support\Facades\Log;
 
 class Handler extends ExceptionHandler
@@ -69,6 +69,8 @@ class Handler extends ExceptionHandler
                 $err = CodeEnum::ERROR_SERVER;
             }
             return $this->error(null,$err);
+        }elseif($exception instanceof ModelNotFoundException){
+            return $this->error(CodeEnum::ERROR_NOT_FOUND);
         }else{
             //return $this->error(null,CodeEnum::ERROR_SERVER);
         }

@@ -4,17 +4,21 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
+use App\Http\Requests\UserRequest;
 use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+    }
+
     public function index(Request $request)
     {
-        //$this->authUser->syncRoles(1);
-        //$this->authUser->syncPermissions(194);
         $kw = $request->input('kw');
         $where = [];
         $kw && $where[] = ['name','like',"%{$kw}%"];
@@ -31,18 +35,14 @@ class UserController extends Controller
         return $this->pageData($paginator);
     }
 
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $password = $request->input('password');
-        $name = $request->input('name');
-        $email = $request->input('email','');
-
-        $password = Hash::make($password);
-        $user = User::create([
-            'name' => $name,
-            'email' => $email,
-            'password' => $password
-        ]);
+        $data = [
+            'name'      => $request->input('name'),
+            'email'     => $request->input('email'),
+            'password'  => Hash::make($request->input('password'))
+        ];
+        $user = User::create($data);
         $user->syncRoles($request->input('role_ids',[]));
         return $this->success($user);
     }
@@ -53,15 +53,14 @@ class UserController extends Controller
         return $this->success($data);
     }
 
-    public function update(Request $request,$id)
+    public function update(UserRequest $request,$id)
     {
         $data = [
             'name'  => $request->input('name'),
             'email' => $request->input('email')
         ];
-        $password = $request->input('password');
-        if($password){
-            $data['password'] = Hash::make($password);
+        if($request->input('password')){
+            $data['password'] = Hash::make($request->input('password'));
         }
         $user = User::findOrFail($id);
         $user->syncRoles($request->input('role_ids',[]));

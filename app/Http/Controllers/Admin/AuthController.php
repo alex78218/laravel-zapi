@@ -32,7 +32,7 @@ class AuthController extends Controller
         unset($credentials['username']);
 
         if (! $token = auth()->attempt($credentials)) {
-            return $this->error([],CodeEnum::ERROR_NO_AUTH);
+            return $this->error(CodeEnum::ERROR_NO_AUTH);
         }
 
         return $this->respondWithToken($token);

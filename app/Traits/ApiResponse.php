@@ -29,7 +29,7 @@ Trait ApiResponse
         return response()->json($back);
     }
 
-    public function error($data,$codeEnum=CodeEnum::E_UNKNOW)
+    public function error($codeEnum=CodeEnum::ERROR_UNKNOW,$data=[])
     {
         $back = [
             'code' => $codeEnum[0],

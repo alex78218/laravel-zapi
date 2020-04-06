@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\CodeEnum;
 use App\Exceptions\ApiException;
+use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use App\Models\ArticleTag;
 use Illuminate\Http\Request;
@@ -31,7 +32,7 @@ class ArticleController extends Controller
         return $this->pageData($paginator);
     }
 
-    public function store(Request $request,ArticleTag $articleTagModel)
+    public function store(ArticleRequest $request,ArticleTag $articleTagModel)
     {
         $article = Article::create($request->all());
         if($article && $request->input('tag_ids')){
@@ -46,7 +47,7 @@ class ArticleController extends Controller
         return $this->success($data);
     }
 
-    public function update(Request $request,ArticleTag $articleTagModel,$id)
+    public function update(ArticleRequest $request,ArticleTag $articleTagModel,$id)
     {
         $res = Article::withTrashed()->find($id)->update($request->except('tag_ids'));
         if($res){

@@ -60,4 +60,8 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class,'article_tags');
     }
+
+    protected $attributes = [
+        'category_id' => 0,
+    ];
 }
