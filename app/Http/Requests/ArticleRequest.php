@@ -25,7 +25,7 @@ class ArticleRequest extends BaseRequest
             'title'         => 'required',
             'category_id'   => 'required|integer',
             'tag_ids'       => 'nullable|array',
-            'content'       => 'required'
+            'content'       => 'string'
         ];
         return $rules;
     }
@@ -37,7 +37,7 @@ class ArticleRequest extends BaseRequest
             'category_id.required'  => '分类不能为空',
             'category_id.integer'   => '分类id必须是数字',
             'tag_ids.array'         => '标签格式错误',
-            'content.required'      => '内容不能为空'
+            'content.string'        => '内容格式错误'
         ];
     }
 }

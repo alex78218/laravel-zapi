@@ -15,7 +15,7 @@ class CategoryRequest extends BaseRequest
         $id = $this->route('id',null);
         $rules = [
             'catename'  => 'required',
-            'parent_id' => 'sometimes|nullable|integer',
+            'parent_id' => 'sometimes|integer',
             'sort'      => 'sometimes|integer',
         ];
         return $rules;

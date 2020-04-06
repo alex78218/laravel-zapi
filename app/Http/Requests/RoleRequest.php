@@ -14,7 +14,7 @@ class RoleRequest extends BaseRequest
     {
         $rules = [
             'name'          => 'required',
-            'remark'        => 'nullable',
+            'remark'        => 'string',
             'permissions'   => 'sometimes|nullable|array'
         ];
         return $rules;
